@@ -14,7 +14,6 @@ connection
     console.log(msgErro);
   });
 
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,31 +23,42 @@ app.get("/", (req, res) => {
   Pergunta.findAll({
     raw: true,
     order: [["id", "DESC"]],
-  }).then((perguntas) => {
-    res.json({ perguntas })
-  }).catch((error)=>{
-    console.log(error);
-   })
+  })
+    .then((perguntas) => {
+      res.json({ perguntas });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json({ error: error });
+    });
 });
-
 
 app.get("/pergunta/:id", (req, res) => {
   var id = req.params.id;
   Pergunta.findOne({
     where: { id: id },
-  }).then((pergunta) => {
-    if (pergunta != undefined) {
-      Resposta.findAll({
-        where: { perguntaId: pergunta.id },
-        order: [["id", "DESC"]],
-      }).then((respostas) => {
-        res.json({pergunta, respostas})
-      });
-    } else {
-     res.status(404).json({ error: "Not Found" });
-    }
-  });
+  })
+    .catch((error) => {
+      res.json({ error: error });
+    })
+    .then((pergunta) => {
+      if (pergunta != undefined) {
+        Resposta.findAll({
+          where: { perguntaId: pergunta.id },
+          order: [["id", "DESC"]],
+        })
+          .then((respostas) => {
+            res.json({ pergunta, respostas });
+          })
+          .catch((error) => {
+            res.json({ error: error });
+          });
+      } else {
+        res.status(404).end();
+      }
+    });
 });
+
 app.post("/salvarpergunta", (req, res) => {
   var titulo = req.body.titulo;
   var descricao = req.body.descricao;
@@ -56,7 +66,11 @@ app.post("/salvarpergunta", (req, res) => {
   Pergunta.create({
     titulo: titulo,
     descricao: descricao,
-  }).then(() => res.status(201).end());
+  })
+    .then(() => res.status(201).end())
+    .catch((error) => {
+      res.json({ error: error });
+    });
 });
 
 app.post("/responder", (req, res) => {
@@ -66,6 +80,10 @@ app.post("/responder", (req, res) => {
     corpo: corpo,
     perguntaId: perguntaId,
   })
+    .then(() => res.status(201).end())
+    .catch((error) => {
+      res.json({ error: error });
+    });
 });
 
 app.listen(6147, () => {
