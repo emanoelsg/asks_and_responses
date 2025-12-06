@@ -29,17 +29,17 @@ app.get("/", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.json({ error: error });
+     res.status(500).json({ error: error });
     });
 });
 
-app.get("/pergunta/:id", (req, res) => {
+app.get("/perguntar/:id", (req, res) => {
   var id = req.params.id;
   Pergunta.findOne({
     where: { id: id },
   })
     .catch((error) => {
-      res.json({ error: error });
+      res.status(500).json({ error: error });
     })
     .then((pergunta) => {
       if (pergunta != undefined) {
@@ -51,7 +51,7 @@ app.get("/pergunta/:id", (req, res) => {
             res.json({ pergunta, respostas });
           })
           .catch((error) => {
-            res.json({ error: error });
+            res.status(500).json({ error: error });
           });
       } else {
         res.status(404).end();
@@ -60,29 +60,29 @@ app.get("/pergunta/:id", (req, res) => {
 });
 
 app.post("/salvarpergunta", (req, res) => {
-  var titulo = req.body.titulo;
-  var descricao = req.body.descricao;
+  var title = req.body.title;
+  var description = req.body.description;
 
   Pergunta.create({
-    titulo: titulo,
-    descricao: descricao,
+    title: title,
+    description: description,
   })
     .then(() => res.status(201).end())
     .catch((error) => {
-      res.json({ error: error });
+    res.status(500).json({ error: error });
     });
 });
 
 app.post("/responder", (req, res) => {
-  var corpo = req.body.corpo;
-  var perguntaId = req.body.pergunta;
+  var description = req.body.description;
+  var perguntaId = req.body.perguntaId;
   Resposta.create({
-    corpo: corpo,
+    description: description,
     perguntaId: perguntaId,
   })
     .then(() => res.status(201).end())
     .catch((error) => {
-      res.json({ error: error });
+      res.status(500).json({ error: error });
     });
 });
 
