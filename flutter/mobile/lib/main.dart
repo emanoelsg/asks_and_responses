@@ -17,10 +17,6 @@ class PerguntasApp extends StatelessWidget {
     return MaterialApp(
       title: 'Asks and Responses',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        useMaterial3: true,
-      ),
       // home: const PerguntasScreen(),
     );
   }
