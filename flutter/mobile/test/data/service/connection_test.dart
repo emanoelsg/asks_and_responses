@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/data/service/connection.dart';
-import 'package:dio/dio.dart';
 import 'package:mobile/domain/entities/question_model.dart';
 import 'package:mobile/domain/entities/question_with_responses_model.dart';
 
@@ -16,7 +16,6 @@ void main() {
       final perguntas = await service.getPerguntas();
       expect(perguntas, isA<List<Pergunta>>());
       expect(perguntas.isNotEmpty, true);
-      for (var pergunta in perguntas) {}
     });
 
     test(
@@ -39,7 +38,7 @@ void main() {
       'getPerguntaWithResponses deve buscar detalhes e respostas de um ID existente',
       () async {
           final result = await service.getPerguntaWithResponses(1);
-          print(result);
+          debugPrint(result);
           expect(result, isA<PerguntasWithRespostas>());
           expect(result.pergunta.id,1);
         
