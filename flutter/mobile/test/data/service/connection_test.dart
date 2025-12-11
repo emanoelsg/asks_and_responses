@@ -1,3 +1,4 @@
+// test/data/service/connection_test.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/data/service/connection.dart';
@@ -37,8 +38,8 @@ void main() {
     test(
       'getPerguntaWithResponses deve buscar detalhes e respostas de um ID existente',
       () async {
-          final result = await service.getPerguntaWithResponses(1);
-          debugPrint(result);
+          final PerguntasWithRespostas result = await service.getPerguntaWithResponses(1);
+          debugPrint(result.toString());
           expect(result, isA<PerguntasWithRespostas>());
           expect(result.pergunta.id,1);
         
