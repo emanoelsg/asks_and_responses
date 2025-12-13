@@ -1,9 +1,9 @@
 // test/data/service/connection_test.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/data/service/connection.dart';
-import 'package:mobile/domain/entities/question_model.dart';
-import 'package:mobile/domain/entities/question_with_responses_model.dart';
+import 'package:mobile/app/data/service/connection.dart';
+import 'package:mobile/app/domain/entities/question_model.dart';
+import 'package:mobile/app/domain/entities/question_with_responses_model.dart';
 
 void main() {
   late PerguntaService service;
@@ -13,21 +13,21 @@ void main() {
   });
 
   group('PerguntaService Real API Tests', () {
-    test('getPerguntas should fetch and parse real data', () async {
-      final perguntas = await service.getPerguntas();
+    test('getQuestions should fetch and parse real data', () async {
+      final perguntas = await service.getQuestions();
       expect(perguntas, isA<List<Pergunta>>());
       expect(perguntas.isNotEmpty, true);
     });
 
     test(
-      'postPergunta should successfully create a new question (expect 201)',
+      'postQuestion should successfully create a new question (expect 201)',
       () async {
         const testTitle = 'Integration Test Question';
         const testDescription =
             'This question was created by the Flutter test.';
 
         await expectLater(
-          service.postPergunta(title: testTitle, description: testDescription),
+          service.postQuestion(title: testTitle, description: testDescription),
           completes,
           reason:
               'The POST request should return a 201 status code (Created) and complete.',
@@ -38,7 +38,7 @@ void main() {
     test(
       'getPerguntaWithResponses deve buscar detalhes e respostas de um ID existente',
       () async {
-          final PerguntasWithRespostas result = await service.getPerguntaWithResponses(1);
+          final PerguntasWithRespostas result = await service.getQuestionsWithResponses(1);
           debugPrint(result.toString());
           expect(result, isA<PerguntasWithRespostas>());
           expect(result.pergunta.id,1);
@@ -47,14 +47,14 @@ void main() {
     );
 
     test(
-      'postResposta deve criar uma nova resposta com sucesso (esperado 201)',
+      'postAnswer deve criar uma nova resposta com sucesso (esperado 201)',
       () async {
         const testBody =
             'Esta é uma resposta de teste criada pelo Flutter test.';
         const testQuestionId = 1;
 
         await expectLater(
-          service.postResposta(
+          service.postAnswer(
             description: testBody,
             perguntaId: testQuestionId,
           ),
