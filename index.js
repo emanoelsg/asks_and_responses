@@ -5,6 +5,8 @@ const connection = require("./database/database");
 const Pergunta = require("./database/Pergunta");
 const Resposta = require("./database/Resposta");
 
+const host = "0.0.0.0";
+const port = "6147";
 connection
   .authenticate()
   .then(() => {
@@ -86,6 +88,6 @@ app.post("/responder", (req, res) => {
     });
 });
 
-app.listen(6147, () => {
+app.listen(port, host, () => {
   console.log("App rodando!");
 });
