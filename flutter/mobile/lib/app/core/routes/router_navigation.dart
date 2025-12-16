@@ -10,9 +10,9 @@ final GoRouter router = GoRouter(initialLocation: '/', routes: [
     builder: (context, state) => const PerguntasScreen(),
   ),
   GoRoute(
-    path: '/detalhe/:id',
+    path: '/details/:id',
     builder: (BuildContext context, GoRouterState state) {
-      final int itemId = int.parse(state.pathParameters['id']!);
+      final int itemId = int.parse(state.pathParameters['id']??'1');
       return AskDetails(itemId: itemId);
     },
   ),
