@@ -40,7 +40,7 @@ class _PerguntasScreenState extends State<PerguntasScreen> {
                 final question = questions[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AskCard(question: question),
+                child: AskCard(question: question),
                 );
               },
             );
