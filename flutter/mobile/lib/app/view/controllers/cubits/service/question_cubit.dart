@@ -1,18 +1,15 @@
 // app/view/controllers/cubits/service/question_cubit.dart
 import 'package:bloc/bloc.dart';
-import '../../../../data/service/connection.dart';
-import '../../../../domain/entities/question_model.dart';
-import '../../../../domain/entities/question_with_responses_model.dart';
+import 'package:mobile/app/data/service/connection.dart';
+import 'package:mobile/app/domain/entities/question_model.dart';
 import 'question_state.dart';
 
 class PerguntasCubit extends Cubit<PerguntasState> {
   final PerguntaService _service = PerguntaService();
   List<Pergunta>? _perguntas;
-  PerguntasWithRespostas? _perguntaWithRespostas;
+
 
   List<Pergunta>? get perguntas => _perguntas;
-  PerguntasWithRespostas? get perguntasWithRespostas => _perguntaWithRespostas;
-
   PerguntasCubit() : super(PerguntasInitial());
 
   Future<void> fetchQuestions() async {
@@ -26,18 +23,7 @@ class PerguntasCubit extends Cubit<PerguntasState> {
     }
   }
 
-  Future<void> fetchQuestionWithResponses(int questionId) async {
-    emit(PerguntasLoading());
-    try {
-      final questionDetail = await _service.getQuestionsWithResponses(
-        questionId,
-      );
-      _perguntaWithRespostas = questionDetail;
-      emit(PerguntasWithRespostasLoaded(questionDetail));
-    } catch (e) {
-      emit(PerguntasError('Failed to fetch question detail: $e'));
-    }
-  }
+  
 
   Future<void> postQuestion({
     required String title,
@@ -53,22 +39,5 @@ class PerguntasCubit extends Cubit<PerguntasState> {
     }
   }
 
-  Future<void> postAnswer({
-    required String description,
-    required int perguntaId,
-  }) async {
-    try {
-      await _service.postAnswer(
-        perguntaId: perguntaId,
-        description: description,
-      );
-      final questionDetail = await _service.getQuestionsWithResponses(
-        perguntaId,
-      );
-      _perguntaWithRespostas = questionDetail;
-      emit(PerguntasWithRespostasLoaded(questionDetail));
-    } catch (e) {
-      emit(PerguntasError('Failed to post answer: $e'));
-    }
-  }
+
 }

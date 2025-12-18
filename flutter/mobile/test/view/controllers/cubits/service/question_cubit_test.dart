@@ -1,16 +1,20 @@
 // test/view/controllers/cubits/service/question_cubit_test.dart
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:mobile/app/view/controllers/cubits/details/details_cubit.dart';
+import 'package:mobile/app/view/controllers/cubits/details/details_states.dart';
 import 'package:mobile/app/view/controllers/cubits/service/question_cubit.dart';
 import 'package:mobile/app/view/controllers/cubits/service/question_state.dart';
 
 
+
+
 void main() {
   late PerguntasCubit controller;
-
+  late DetailsCubit cubit;
 
   setUp(() {
     controller = PerguntasCubit();
+    cubit = DetailsCubit();
   });
   group('testing controller functions', () {
     test('fetchQuestions should update state to PerguntasLoaded', () async {
@@ -24,12 +28,12 @@ void main() {
       () async {
         const testQuestionId = 1;
 
-        await controller.fetchQuestionWithResponses(testQuestionId);
+        await cubit.fetchQuestionWithResponses(testQuestionId);
 
-        expect(controller.state, isA<PerguntasWithRespostasLoaded>());
-        expect(controller.perguntasWithRespostas, isNotNull);
+        expect(cubit.state, isA<DetailsLoaded>());
+        expect(cubit.perguntasWithRespostas, isNotNull);
         expect(
-          controller.perguntasWithRespostas!.pergunta.id,
+          cubit.perguntasWithRespostas!.pergunta.id,
           testQuestionId,
         );
       },
@@ -63,15 +67,15 @@ void main() {
         const testBody = 'This is a test answer from the Cubit test.';
         const testQuestionId = 1;
 
-        await controller.postAnswer(
+        await cubit.postAnswer(
           description: testBody,
           perguntaId: testQuestionId,
         );
 
-        expect(controller.state, isA<PerguntasWithRespostasLoaded>());
-        expect(controller.perguntasWithRespostas, isNotNull);
+        expect(cubit.state, isA<DetailsLoaded>());
+        expect(cubit.perguntasWithRespostas, isNotNull);
         expect(
-          controller.perguntasWithRespostas!.respostas
+          cubit.perguntasWithRespostas!.respostas
               ?.any((a) => a.description == testBody),
           true,
         );

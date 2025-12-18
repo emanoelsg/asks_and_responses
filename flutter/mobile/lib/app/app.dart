@@ -9,8 +9,12 @@ class PerguntasApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => PerguntasCubit(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<PerguntasCubit>(
+            create: (context) => PerguntasCubit(),
+          ),
+        ],
         child: MaterialApp.router(
           routerConfig: router,
           title: 'Asks and Responses',

@@ -12,8 +12,8 @@ final GoRouter router = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/details/:id',
     builder: (BuildContext context, GoRouterState state) {
-      final int itemId = int.parse(state.pathParameters['id']??'1');
-      return AskDetails(itemId: itemId);
+      final int? itemId = int.tryParse(state.pathParameters['id']??'1');
+      return AskDetails(itemId: itemId!);
     },
   ),
 ]);

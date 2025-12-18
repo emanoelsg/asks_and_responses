@@ -1,6 +1,6 @@
 // app/view/controllers/cubits/service/question_state.dart
 import '../../../../domain/entities/question_model.dart';
-import '../../../../domain/entities/question_with_responses_model.dart';
+
 
 abstract class PerguntasState {}
 
@@ -14,11 +14,6 @@ class PerguntasLoaded extends PerguntasState {
   PerguntasLoaded(this.perguntas);
 }
 
-class PerguntasWithRespostasLoaded extends PerguntasState {
-  final PerguntasWithRespostas perguntaWithRespostas;
-
-  PerguntasWithRespostasLoaded(this.perguntaWithRespostas);
-}
 
 class PerguntasError extends PerguntasState {
   final String message;
