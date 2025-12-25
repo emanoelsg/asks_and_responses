@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/app/core/routes/router_navigation.dart';
+import 'package:mobile/app/view/controllers/cubits/details/details_cubit.dart';
 import 'package:mobile/app/view/controllers/cubits/service/question_cubit.dart';
 
 class PerguntasApp extends StatelessWidget {
@@ -13,6 +14,9 @@ class PerguntasApp extends StatelessWidget {
         providers: [
           BlocProvider<PerguntasCubit>(
             create: (context) => PerguntasCubit(),
+          ),
+          BlocProvider<DetailsCubit>(
+            create: (context) => DetailsCubit(),
           ),
         ],
         child: MaterialApp.router(
