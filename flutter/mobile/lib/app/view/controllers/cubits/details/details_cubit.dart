@@ -12,7 +12,7 @@ class DetailsCubit extends Cubit<DetailsState> {
   Future<void> fetchQuestionWithResponses(int questionId) async {
     emit(DetailsLoading());
     try {
-      final questionDetail = await _service.getQuestionsWithResponses(
+      final questionDetail = await _service.getPerguntaWithResponses(
         questionId,
       );
       _perguntaWithRespostas = questionDetail;
@@ -27,11 +27,11 @@ class DetailsCubit extends Cubit<DetailsState> {
     required int perguntaId,
   }) async {
     try {
-      await _service.postAnswer(
+      await _service.postResposta(
         perguntaId: perguntaId,
         description: description,
       );
-      final questionDetail = await _service.getQuestionsWithResponses(
+      final questionDetail = await _service.getPerguntaWithResponses(
         perguntaId,
       );
       _perguntaWithRespostas = questionDetail;

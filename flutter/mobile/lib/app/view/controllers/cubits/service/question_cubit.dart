@@ -15,7 +15,7 @@ class PerguntasCubit extends Cubit<PerguntasState> {
   Future<void> fetchQuestions() async {
     emit(PerguntasLoading());
     try {
-      final listOfQuestions = await _service.getQuestions();
+      final listOfQuestions = await _service.getPerguntas();
       _perguntas = listOfQuestions;
       emit(PerguntasLoaded(listOfQuestions));
     } catch (e) {
@@ -30,8 +30,8 @@ class PerguntasCubit extends Cubit<PerguntasState> {
     required String description,
   }) async {
     try {
-      await _service.postQuestion(title: title, description: description);
-      final listOfQuestions = await _service.getQuestions();
+      await _service.postPergunta(title: title, description: description);
+      final listOfQuestions = await _service.getPerguntas();
       _perguntas = listOfQuestions;
       emit(PerguntasLoaded(listOfQuestions));
     } catch (e) {

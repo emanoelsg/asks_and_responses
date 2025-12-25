@@ -1,10 +1,8 @@
-// app/core/config/url/routes.dart
 class Routes {
-  String base = 'http://192.168.0.106:6147/';
-  late final getAllURL = base;
-  late final postQuestionURL = '$base/salvarpergunta';
-  late final postAnswerURL = '$base/responder';
+  late final getAllURL = 'http://localhost:6147/';
+  late final postPerguntaURL = 'http://localhost:6147/salvarpergunta';
+  late final postRespostaURL = 'http://localhost:6147/responder';
   String getByIdURL(int id) {
-    return '$base/perguntar/$id';
+    return 'http://localhost:6147/perguntar/$id';
   }
 }
