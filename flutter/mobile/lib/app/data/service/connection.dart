@@ -103,14 +103,14 @@ class PerguntaService {
     try {
       final response = await _httpClient.post(
         _routes.postPerguntaURL,
-
         data: {'title': title, 'description': description},
-
         // Configuração necessária para envio de dados como formulário.
 
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
-
+      if (title.isEmpty || description.isEmpty) {
+        throw Exception('Campos não podem ser vazios');
+      }
       // O backend espera o status 201 (Created) para sucesso.
 
       if (response.statusCode != 201) {
@@ -141,7 +141,9 @@ class PerguntaService {
 
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
-
+      if (description.isEmpty || perguntaId.isNegative) {
+        throw Exception('Campo de descrição não pode ser vazio');
+      }
       // O backend espera o status 201 (Created) para sucesso.
 
       if (response.statusCode != 201) {
