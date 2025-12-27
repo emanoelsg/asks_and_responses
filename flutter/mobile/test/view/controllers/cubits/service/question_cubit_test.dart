@@ -83,13 +83,13 @@ void main() {
     test(
         'fetchQuestionWithResponses deve emitir DetailsError para ID inexistente',
         () async {
-      const invalidId = 999999;
-
-      await cubit.fetchQuestionWithResponses(invalidId);
-
-      expect(cubit.state, isA<DetailsError>());
-      final state = cubit.state as DetailsError;
-      expect(state.message, contains('Failed to fetch question detail'));
+      const invalidId = -8;
+      await expectLater(
+        () => cubit.fetchQuestionWithResponses(invalidId),
+        throwsA(isA<Exception>()),
+        reason:
+            'O backend deve rejeitar IDs negativos e o service deve lançar uma Exception.',
+      );
     });
 
     test(

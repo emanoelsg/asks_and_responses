@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/app/view/controllers/cubits/details/details_cubit.dart';
 import 'package:mobile/app/view/controllers/cubits/details/details_states.dart';
 
-
-
 class AskDetails extends StatefulWidget {
   final int itemId;
   const AskDetails({super.key, required this.itemId});
@@ -17,7 +15,6 @@ class AskDetails extends StatefulWidget {
 class _AskDetailsState extends State<AskDetails> {
   @override
   void initState() {
-    // Inicia a busca pelos detalhes e respostas da pergunta assim que a tela é carregada
     context.read<DetailsCubit>().fetchQuestionWithResponses(widget.itemId);
     super.initState();
   }
@@ -46,12 +43,15 @@ class _AskDetailsState extends State<AskDetails> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline, color: Colors.red, size: 48),
+                    const Icon(Icons.error_outline,
+                        color: Colors.red, size: 48),
                     const SizedBox(height: 16),
                     Text(state.message, textAlign: TextAlign.center),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () => context.read<DetailsCubit>().fetchQuestionWithResponses(widget.itemId),
+                      onPressed: () => context
+                          .read<DetailsCubit>()
+                          .fetchQuestionWithResponses(widget.itemId),
                       child: const Text('Tentar Novamente'),
                     ),
                   ],
@@ -70,7 +70,8 @@ class _AskDetailsState extends State<AskDetails> {
                   // Card da Pergunta
                   Card(
                     color: Colors.indigo.shade50,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -78,7 +79,10 @@ class _AskDetailsState extends State<AskDetails> {
                         children: [
                           Text(
                             data.pergunta.title ?? 'Sem Título',
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.indigo),
                           ),
                           const SizedBox(height: 8),
                           Text(data.pergunta.description ?? 'Sem descrição'),
@@ -86,26 +90,6 @@ class _AskDetailsState extends State<AskDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Respostas (${data.respostas?.length ?? 0})',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const Divider(),
-                  if (data.respostas == null || data.respostas!.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Center(child: Text('Nenhuma resposta ainda.')),
-                    )
-                  else
-                    ...data.respostas!.map((resp) => Card(
-                          margin: const EdgeInsets.symmetric(vertical: 4),
-                          child: ListTile(
-                            leading: const Icon(Icons.comment, color: Colors.blue),
-                            title: Text(resp.description ?? ''),
-                            subtitle: Text('ID: ${resp.id}', style: const TextStyle(fontSize: 10)),
-                          ),
-                        )),
                 ],
               ),
             );

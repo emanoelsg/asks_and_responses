@@ -9,7 +9,7 @@ class DetailsCubit extends Cubit<DetailsState> {
   PerguntasWithRespostas? _perguntaWithRespostas;
   PerguntasWithRespostas? get perguntasWithRespostas => _perguntaWithRespostas;
 
-  Future<void> fetchQuestionWithResponses(int questionId) async {
+  Future<PerguntasWithRespostas> fetchQuestionWithResponses(int questionId) async {
     emit(DetailsLoading());
     try {
       final questionDetail = await _service.getPerguntaWithResponses(
@@ -17,8 +17,10 @@ class DetailsCubit extends Cubit<DetailsState> {
       );
       _perguntaWithRespostas = questionDetail;
       emit(DetailsLoaded(questionDetail));
+      return questionDetail;
     } catch (e) {
       emit(DetailsError('Failed to fetch question detail: $e'));
+      rethrow;
     }
   }
 
